@@ -1,0 +1,18 @@
+plugins {
+    id 'com.github.node-gradle.node'
+}
+
+node {
+    version = '18.16.0'
+    npmVersion = '9.6.7'
+    download = true
+    workDir = file("${project.buildDir}/nodejs")
+    npmWorkDir = file("${project.buildDir}/npm")
+    nodeProjectDir = file("${projectDir}")
+}
+
+tasks.register('buildAngular', com.github.gradle.node.npm.task.NpmTask) {
+    dependsOn tasks.npmInstall
+    args = ['run', 'build']
+    workingDir = file("${projectDir}")
+}

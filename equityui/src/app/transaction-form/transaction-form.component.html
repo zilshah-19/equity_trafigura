@@ -1,0 +1,21 @@
+
+<form (ngSubmit)="submit()">
+  <input [(ngModel)]="trade.transactionId" name="transactionId" placeholder="Transaction ID" required />
+  <input [(ngModel)]="trade.symbol" name="symbol" placeholder="Symbol" required />
+  <input [(ngModel)]="trade.quantity" name="quantity" placeholder="Quantity" type="number" required />
+  <input [(ngModel)]="trade.price" name="price" placeholder="Price" type="number" required />
+  <select [(ngModel)]="trade.action" name="action" required>
+    <option value="BUY">Buy</option>
+    <option value="SELL">Sell</option>
+  </select>
+  <button type="submit">Submit</button>
+</form>
+
+<div *ngIf="positions.length">
+  <h3>Positions:</h3>
+  <ul>
+    <li *ngFor="let p of positions">
+      {{ p.symbol }} - Qty: {{ p.quantity }}, Avg Price: {{ p.averageBuyPrice }}
+    </li>
+  </ul>
+</div>
