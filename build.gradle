@@ -1,0 +1,51 @@
+
+
+buildscript {
+	ext {
+		springBootVersion = '3.5.0'
+	}
+	repositories {
+		mavenCentral()
+	}
+}
+plugins {
+	id 'com.github.node-gradle.node' version '7.0.2'
+}
+
+node {
+	version = '18.16.0'
+	npmVersion = '9.6.7'
+	download = true
+
+}
+
+tasks.register('buildAngular') {
+	dependsOn tasks.npmInstall
+	args = ['run', 'build']
+	workingDir = file("${rootProject.projectDir}/entityui")
+}
+
+tasks.register('copyAngularBuild', Copy) {
+	dependsOn 'buildAngular'
+	from file("${rootProject.projectDir}/entityui/dist/entityui")
+	into file("${projectDir}/src/main/resources/static")
+}
+
+allprojects {
+	group = 'com.example'
+	version = '1.0.0'
+	repositories {
+		mavenCentral()
+	}
+}
+
+subprojects {
+	apply plugin: 'java'
+
+	repositories {
+		mavenCentral()
+	}
+}
+
+
+
